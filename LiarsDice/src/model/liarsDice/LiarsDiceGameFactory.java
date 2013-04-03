@@ -16,9 +16,6 @@ import model.Player;
 import model.liarsDice.gameLogic.LiarsDiceBot;
 import model.liarsDice.gameLogic.LiarsDiceGame;
 import model.liarsDice.gameLogic.LiarsDicePlayer;
-import model.liarsDice.testBots.Challenger;
-import model.liarsDice.testBots.Consistent;
-import model.liarsDice.testBots.Problematic;
 
 
 /**
@@ -124,6 +121,7 @@ public class LiarsDiceGameFactory implements GameFactory {
 						}
 						line = in.readLine();
 					}
+					in.close();
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				} catch (IOException e) {

@@ -419,6 +419,7 @@ public class LiarsDiceGame implements Game {
 	/**
 	 * Prints the exception log to standard output.
 	 */
+	@SuppressWarnings("unused")
 	private void printLog() {
 		System.out.println("Exception Log:");
 		for (int i=0; i<exceptionLog.size(); i++)

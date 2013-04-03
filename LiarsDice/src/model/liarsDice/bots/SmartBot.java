@@ -1,9 +1,6 @@
 package model.liarsDice.bots;
 
-import java.util.List;
-
 import model.liarsDice.gameInfo.GameInfo;
-import model.liarsDice.gameInfo.PlayerInfo;
 import model.liarsDice.gameLogic.Bid;
 import model.liarsDice.gameLogic.Challenge;
 import model.liarsDice.gameLogic.Decision;
@@ -15,23 +12,20 @@ import model.liarsDice.gameLogic.LiarsDiceBot;
  */
 public class SmartBot extends LiarsDiceBot {
 
-	public String getName() {
-		return "Smart Bot";
-	}
+	public String getName() { return "Smart Bot"; }
 
 	public Decision getDecision(GameInfo currentGameInfo) {
 		Bid currentBid = currentGameInfo.getCurrentBid();
-		if(currentBid == null){
-			return calculateFirstBid(currentGameInfo);
-		}
+		if(currentBid == null) return calculateFirstBid(currentGameInfo);
 		else{
-			return makeDecision(currentGameInfo);
+			Decision d = makeDecision(currentGameInfo);
+			return checkValidDecision(d, currentGameInfo) ? d : new Challenge();
 		}
 	}
 
 	private Decision makeDecision(GameInfo currentGameInfo) {
 		int[] myDiceFrequencies = getMyDiceFrequencies(currentGameInfo);
-		int totalDice = getTotalDice(currentGameInfo);
+		int totalDice = currentGameInfo.getTotalDice();
 		int othersDice = totalDice - currentGameInfo.getMyDice().size();
 		Bid currentBid = currentGameInfo.getCurrentBid();
 		int onesGuess = othersDice/6 + myDiceFrequencies[0];
@@ -58,15 +52,6 @@ public class SmartBot extends LiarsDiceBot {
 		}
 	}
 
-	private int getTotalDice(GameInfo currentGameInfo) {
-		int totalDice = currentGameInfo.getMyDice().size();
-		List<PlayerInfo> players = currentGameInfo.getAllPlayersInfo();
-		for(PlayerInfo p : players){
-			totalDice += p.getNumDice();
-		}
-		return totalDice;
-	}
-
 	private Decision calculateFirstBid(GameInfo currentGameInfo) {
 		int[] myDiceFrequencies = getMyDiceFrequencies(currentGameInfo);
 		int maxValue = -1, maxFrequency = -1;
@@ -82,9 +67,7 @@ public class SmartBot extends LiarsDiceBot {
 	
 	private int[] getMyDiceFrequencies(GameInfo currentGameInfo) {
 		int[] myDiceFrequencies = new int[6];
-		for(Die d : currentGameInfo.getMyDice()){
-			myDiceFrequencies[d.getValue() - 1]++;
-		}
+		for(Die d : currentGameInfo.getMyDice()) myDiceFrequencies[d.getValue() - 1]++;
 		return myDiceFrequencies;
 	}
 

@@ -4,11 +4,10 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
-import javax.swing.UIManager.LookAndFeelInfo;
 
 import model.Facade;
-import model.liarsDice.LiarsDiceGameFactory;
 
+@SuppressWarnings("serial")
 public class GUI extends JFrame {
    
     private Facade facade;
@@ -140,6 +139,7 @@ public class GUI extends JFrame {
 //			//use standard
 //		}
     	
-    	GUI gui = new GUI();
+    	@SuppressWarnings("unused")
+		GUI gui = new GUI();
     }
 }
